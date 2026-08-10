@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#2563EB,#3B82F6);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+.login-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+.login-card{
+    width:100%;
+    max-width:420px;
+    background:#fff;
+    padding:40px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+    animation:fadeIn .5s ease;
+}
+.login-card h1{
+    text-align:center;
+    color:#2563EB;
+    margin-bottom:8px;
+    font-size:32px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#6B7280;
+    margin-bottom:30px;
+    font-size:15px;
+}
+.login-card label{
+    display:block;
+    margin-bottom:8px;
+    margin-top:18px;
+    font-weight:500;
+    color:#374151;
+}
+.input1{
+    width:100%;
+    padding:14px 16px;
+    border:1px solid #D1D5DB;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+    transition:.3s;
+}
+
+.input1:focus{
+    border-color:#2563EB;
+    box-shadow:0 0 10px rgba(37,99,235,.2);
+}
+.remember{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin:18px 0;
+    font-size:14px;
+    color:#555;
+}
+.logger{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563EB;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.logger:hover{
+    background:#1D4ED8;
+    transform:translateY(-2px);
+}
+
+.logger:active{
+    transform:scale(.98);
+}
+.login-card a{
+    display:block;
+    text-align:center;
+    margin-top:18px;
+    color:#2563EB;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.login-card a:hover{
+    text-decoration:underline;
+}
+.error{
+    background:#FEE2E2;
+    color:#DC2626;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:15px;
+    text-align:center;
+    font-size:14px;
+}
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+@media(max-width:500px){
+
+    .login-card{
+        padding:30px 25px;
+    }
+
+    .login-card h1{
+        font-size:28px;
+    }
+
+}
