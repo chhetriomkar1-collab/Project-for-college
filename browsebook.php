@@ -3,10 +3,7 @@
 include("conn.php");
 include("header.php");
 
-
-// ==========================================
 // GET SEARCH AND FILTER VALUES
-// ==========================================
 
 $search = isset($_GET['search'])
     ? trim($_GET['search'])
@@ -24,10 +21,7 @@ $category = isset($_GET['category'])
     ? trim($_GET['category'])
     : "";
 
-
-// ==========================================
 // BUILD QUERY
-// ==========================================
 
 $sql = "
     SELECT
@@ -39,10 +33,7 @@ $sql = "
     WHERE 1=1
 ";
 
-
-// ==========================================
 // SEARCH
-// ==========================================
 
 if ($search !== "") {
 
@@ -61,10 +52,7 @@ if ($search !== "") {
     ";
 }
 
-
-// ==========================================
 // TYPE FILTER
-// ==========================================
 
 if ($type === "Sell" || $type === "Exchange") {
 
@@ -78,10 +66,7 @@ if ($type === "Sell" || $type === "Exchange") {
     ";
 }
 
-
-// ==========================================
 // CONDITION FILTER
-// ==========================================
 
 $allowedConditions = [
     "New",
@@ -103,10 +88,7 @@ if (in_array($condition, $allowedConditions)) {
     ";
 }
 
-
-// ==========================================
 // CATEGORY FILTER
-// ==========================================
 
 if ($category !== "") {
 
@@ -120,23 +102,16 @@ if ($category !== "") {
     ";
 }
 
-
-// ==========================================
 // SORT
-// ==========================================
 
 $sql .= "
     ORDER BY books.created_at DESC
 ";
 
-
 $result = mysqli_query($conn, $sql);
 
 ?>
-<link
-    rel="stylesheet"
-    href="css/browsebook.css"
->
+<link rel="stylesheet" href="css/books.css">
 
 <section class="books-section">
 
@@ -150,26 +125,15 @@ $result = mysqli_query($conn, $sql);
 
     </div>
 
-
     <!-- =====================================
          FILTERS
     ====================================== -->
 
-    <form
-        method="GET"
-        action="browsebook.php"
-        class="book-filters"
-    >
+    <form method="GET" action="browsebook.php" class="book-filters">
 
         <!-- Keep search when filtering -->
 
-        <input
-            type="text"
-            name="search"
-            placeholder="Search books..."
-            value="<?php echo htmlspecialchars($search); ?>"
-        >
-
+        <input type="text" name="search" placeholder="Search books..." value="<?php echo htmlspecialchars($search); ?>">
 
         <!-- TYPE -->
 
@@ -179,22 +143,11 @@ $result = mysqli_query($conn, $sql);
                 All Types
             </option>
 
-            <option
-                value="Sell"
-                <?php echo ($type === "Sell") ? "selected" : ""; ?>
-            >
-                Sell
-            </option>
+            <option value="Sell" <?php echo ($type === "Sell") ? "selected" : ""; ?>> Sell </option>
 
-            <option
-                value="Exchange"
-                <?php echo ($type === "Exchange") ? "selected" : ""; ?>
-            >
-                Exchange
-            </option>
+            <option value="Exchange" <?php echo ($type === "Exchange") ? "selected" : ""; ?>> Exchange </option>
 
         </select>
-
 
         <!-- CATEGORY -->
 
@@ -204,64 +157,25 @@ $result = mysqli_query($conn, $sql);
                 All Categories
             </option>
 
-            <option
-                value="Programming"
-                <?php echo ($category === "Programming") ? "selected" : ""; ?>
-            >
-                Programming
+            <option value="Programming" <?php echo ($category === "Programming") ? "selected" : ""; ?>> Programming
             </option>
 
-            <option
-                value="Business"
-                <?php echo ($category === "Business") ? "selected" : ""; ?>
-            >
-                Business
+            <option value="Business" <?php echo ($category === "Business") ? "selected" : ""; ?>> Business </option>
+
+            <option value="ACCA" <?php echo ($category === "ACCA") ? "selected" : ""; ?>> ACCA </option>
+
+            <option value="Engineering" <?php echo ($category === "Engineering") ? "selected" : ""; ?>> Engineering
             </option>
 
-            <option
-                value="ACCA"
-                <?php echo ($category === "ACCA") ? "selected" : ""; ?>
-            >
-                ACCA
-            </option>
+            <option value="Medical" <?php echo ($category === "Medical") ? "selected" : ""; ?>> Medical </option>
 
-            <option
-                value="Engineering"
-                <?php echo ($category === "Engineering") ? "selected" : ""; ?>
-            >
-                Engineering
-            </option>
+            <option value="Novel" <?php echo ($category === "Novel") ? "selected" : ""; ?>> Novel </option>
 
-            <option
-                value="Medical"
-                <?php echo ($category === "Medical") ? "selected" : ""; ?>
-            >
-                Medical
-            </option>
+            <option value="Reference" <?php echo ($category === "Reference") ? "selected" : ""; ?>> Reference </option>
 
-            <option
-                value="Novel"
-                <?php echo ($category === "Novel") ? "selected" : ""; ?>
-            >
-                Novel
-            </option>
-
-            <option
-                value="Reference"
-                <?php echo ($category === "Reference") ? "selected" : ""; ?>
-            >
-                Reference
-            </option>
-
-            <option
-                value="Other"
-                <?php echo ($category === "Other") ? "selected" : ""; ?>
-            >
-                Other
-            </option>
+            <option value="Other" <?php echo ($category === "Other") ? "selected" : ""; ?>> Other </option>
 
         </select>
-
 
         <!-- CONDITION -->
 
@@ -271,55 +185,27 @@ $result = mysqli_query($conn, $sql);
                 All Conditions
             </option>
 
-            <option
-                value="New"
-                <?php echo ($condition === "New") ? "selected" : ""; ?>
-            >
-                New
-            </option>
+            <option value="New" <?php echo ($condition === "New") ? "selected" : ""; ?>> New </option>
 
-            <option
-                value="Like New"
-                <?php echo ($condition === "Like New") ? "selected" : ""; ?>
-            >
-                Like New
-            </option>
+            <option value="Like New" <?php echo ($condition === "Like New") ? "selected" : ""; ?>> Like New </option>
 
-            <option
-                value="Good"
-                <?php echo ($condition === "Good") ? "selected" : ""; ?>
-            >
-                Good
-            </option>
+            <option value="Good" <?php echo ($condition === "Good") ? "selected" : ""; ?>> Good </option>
 
-            <option
-                value="Fair"
-                <?php echo ($condition === "Fair") ? "selected" : ""; ?>
-            >
-                Fair
-            </option>
+            <option value="Fair" <?php echo ($condition === "Fair") ? "selected" : ""; ?>> Fair </option>
 
-            <option
-                value="Poor"
-                <?php echo ($condition === "Poor") ? "selected" : ""; ?>
-            >
-                Poor
-            </option>
+            <option value="Poor" <?php echo ($condition === "Poor") ? "selected" : ""; ?>> Poor </option>
 
         </select>
-
 
         <button type="submit">
             Apply Filters
         </button>
-
 
         <a href="browsebook.php" class="clear-filters">
             Clear
         </a>
 
     </form>
-
 
     <!-- =====================================
          RESULTS
@@ -333,99 +219,87 @@ $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_assoc($result)) {
 
-        ?>
+                ?>
 
-            <div class="book-card">
+                <div class="book-card">
 
-                <img
-                    src="images/<?php echo htmlspecialchars($row['image']); ?>"
-                    alt="<?php echo htmlspecialchars($row['title']); ?>"
-                >
+                    <img src="images/<?php echo htmlspecialchars($row['image']); ?>"
+                        alt="<?php echo htmlspecialchars($row['title']); ?>">
 
+                    <div class="book-info">
 
-                <div class="book-info">
+                        <h3>
+                            <?php echo htmlspecialchars($row['title']); ?>
+                        </h3>
 
-                    <h3>
-                        <?php echo htmlspecialchars($row['title']); ?>
-                    </h3>
+                        <p>
 
+                            <strong>Author:</strong>
 
-                    <p>
+                            <?php echo htmlspecialchars($row['author']); ?>
 
-                        <strong>Author:</strong>
+                        </p>
 
-                        <?php echo htmlspecialchars($row['author']); ?>
+                        <p>
 
-                    </p>
+                            <strong>Category:</strong>
 
+                            <?php echo htmlspecialchars($row['category']); ?>
 
-                    <p>
+                        </p>
 
-                        <strong>Category:</strong>
+                        <p>
 
-                        <?php echo htmlspecialchars($row['category']); ?>
+                            <strong>Condition:</strong>
 
-                    </p>
+                            <?php echo htmlspecialchars($row['book_condition']); ?>
 
+                        </p>
 
-                    <p>
+                        <?php if ($row['type'] === "Sell") { ?>
 
-                        <strong>Condition:</strong>
+                            <h4>
 
-                        <?php echo htmlspecialchars($row['book_condition']); ?>
+                                Rs.
+                                <?php echo number_format(
+                                    (float) $row['price'],
+                                    2
+                                ); ?>
 
-                    </p>
+                            </h4>
 
+                        <?php } else { ?>
 
-                    <?php if ($row['type'] === "Sell") { ?>
+                            <h4 style="color:green;">
 
-                        <h4>
+                                Available for Exchange
 
-                            Rs.
-                            <?php echo number_format(
-                                (float)$row['price'],
-                                2
-                            ); ?>
+                            </h4>
 
-                        </h4>
+                        <?php } ?>
 
-                    <?php } else { ?>
+                        <small>
 
-                        <h4 style="color:green;">
+                            Posted by
+                            <?php echo htmlspecialchars($row['username']); ?>
 
-                            Available for Exchange
+                        </small>
 
-                        </h4>
+                        <a href="bookdetails.php?id=<?php echo (int) $row['id']; ?>" class="view-book-btn">
+                            View Details
+                        </a>
 
-                    <?php } ?>
-
-
-                    <small>
-
-                        Posted by
-                        <?php echo htmlspecialchars($row['username']); ?>
-
-                    </small>
-
-
-                    <a
-                        href="bookdetails.php?id=<?php echo (int)$row['id']; ?>"
-                        class="view-book-btn"
-                    >
-                        View Details
-                    </a>
+                    </div>
 
                 </div>
 
-            </div>
-
-        <?php
+                <?php
 
             }
 
         } else {
 
-        ?>
+            ?>
 
             <div class="no-books">
 
@@ -437,16 +311,13 @@ $result = mysqli_query($conn, $sql);
                     Try changing your search or filters.
                 </p>
 
-                <a
-                    href="browsebook.php"
-                    class="btn-primary"
-                >
+                <a href="browsebook.php" class="btn-primary">
                     View All Books
                 </a>
 
             </div>
 
-        <?php
+            <?php
 
         }
 
@@ -455,7 +326,6 @@ $result = mysqli_query($conn, $sql);
     </div>
 
 </section>
-
 
 <?php
 

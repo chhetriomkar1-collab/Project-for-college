@@ -3,10 +3,7 @@
 session_start();
 include("conn.php");
 
-
-// ==========================================
 // LOGIN CHECK
-// ==========================================
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -15,10 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = (int) $_SESSION['user_id'];
 
-
-// ==========================================
 // GET CURRENT USER
-// ==========================================
 
 $stmt = $conn->prepare("
     SELECT
@@ -52,17 +46,11 @@ $user = $result->fetch_assoc();
 
 $stmt->close();
 
-
-// ==========================================
 // ROLE
-// ==========================================
 
 $role = strtolower($user['role']);
 
-
-// ==========================================
 // USER DASHBOARD STATISTICS
-// ==========================================
 
 $myBooksStmt = $conn->prepare("
     SELECT
@@ -80,10 +68,7 @@ $myBooks = $myBooksStmt->get_result()->fetch_assoc();
 
 $myBooksStmt->close();
 
-
-// ==========================================
 // ADMIN STATISTICS
-// ==========================================
 
 $adminStats = [];
 
@@ -108,10 +93,7 @@ if ($role === 'admin') {
     $adminStats = $statsQuery->fetch_assoc();
 }
 
-
-// ==========================================
 // RECENT USER LISTINGS
-// ==========================================
 
 $recentBooksStmt = $conn->prepare("
     SELECT
@@ -134,10 +116,7 @@ $recentBooksStmt->execute();
 
 $recentBooks = $recentBooksStmt->get_result();
 
-
-// ==========================================
 // ADMIN RECENT USERS
-// ==========================================
 
 $recentUsers = null;
 $recentAdminBooks = null;
@@ -157,7 +136,6 @@ if ($role === 'admin') {
         LIMIT 5
     ");
 
-
     $recentAdminBooks = $conn->query("
         SELECT
             books.id,
@@ -174,7 +152,6 @@ if ($role === 'admin') {
     ");
 }
 
-
 include("header.php");
 
 ?>
@@ -183,7 +160,6 @@ include("header.php");
 <section class="dashboard-section">
 
     <div class="dashboard-container">
-
 
         <!-- =================================
              HEADER
@@ -228,27 +204,20 @@ include("header.php");
 
             </div>
 
-
-            <a
-                href="profile.php"
-                class="dashboard-profile-btn"
-            >
+            <a href="profile.php" class="dashboard-profile-btn">
                 <i class="fa-solid fa-user"></i>
                 My Profile
             </a>
 
         </div>
 
-
         <?php if ($role === 'admin') { ?>
-
 
             <!-- =================================
                  ADMIN DASHBOARD
             ================================== -->
 
             <div class="dashboard-stats">
-
 
                 <div class="stat-card">
 
@@ -274,7 +243,6 @@ include("header.php");
 
                 </div>
 
-
                 <div class="stat-card">
 
                     <div class="stat-icon">
@@ -299,7 +267,6 @@ include("header.php");
 
                 </div>
 
-
                 <div class="stat-card">
 
                     <div class="stat-icon">
@@ -323,7 +290,6 @@ include("header.php");
                     </div>
 
                 </div>
-
 
                 <div class="stat-card">
 
@@ -351,7 +317,6 @@ include("header.php");
 
             </div>
 
-
             <!-- ADMIN QUICK ACTIONS -->
 
             <div class="dashboard-panel">
@@ -372,14 +337,9 @@ include("header.php");
 
                 </div>
 
-
                 <div class="admin-actions">
 
-
-                    <a
-                        href="admin_users.php"
-                        class="admin-action-card"
-                    >
+                    <a href="admin_users.php" class="admin-action-card">
 
                         <i class="fa-solid fa-users"></i>
 
@@ -397,11 +357,7 @@ include("header.php");
 
                     </a>
 
-
-                    <a
-                        href="admin_books.php"
-                        class="admin-action-card"
-                    >
+                    <a href="admin_books.php" class="admin-action-card">
 
                         <i class="fa-solid fa-book"></i>
 
@@ -419,11 +375,7 @@ include("header.php");
 
                     </a>
 
-
-                    <a
-                        href="browsebook.php"
-                        class="admin-action-card"
-                    >
+                    <a href="browsebook.php" class="admin-action-card">
 
                         <i class="fa-solid fa-store"></i>
 
@@ -445,7 +397,6 @@ include("header.php");
 
             </div>
 
-
             <!-- RECENT USERS -->
 
             <div class="dashboard-panel">
@@ -465,7 +416,6 @@ include("header.php");
                     </a>
 
                 </div>
-
 
                 <div class="dashboard-table-wrapper">
 
@@ -497,29 +447,29 @@ include("header.php");
 
                         <tbody>
 
-                        <?php while ($recentUser = $recentUsers->fetch_assoc()) { ?>
+                            <?php while ($recentUser = $recentUsers->fetch_assoc()) { ?>
 
-                            <tr>
+                                <tr>
 
-                                <td>
-                                    <?php
-                                    echo htmlspecialchars(
-                                        $recentUser['fullname']
-                                    );
-                                    ?>
-                                </td>
+                                    <td>
+                                        <?php
+                                        echo htmlspecialchars(
+                                            $recentUser['fullname']
+                                        );
+                                        ?>
+                                    </td>
 
-                                <td>
-                                    @<?php
-                                    echo htmlspecialchars(
-                                        $recentUser['username']
-                                    );
-                                    ?>
-                                </td>
+                                    <td>
+                                        @<?php
+                                        echo htmlspecialchars(
+                                            $recentUser['username']
+                                        );
+                                        ?>
+                                    </td>
 
-                                <td>
+                                    <td>
 
-                                    <span class="
+                                        <span class="
                                         table-role
                                         <?php
                                         echo $recentUser['role'] === 'admin'
@@ -528,32 +478,32 @@ include("header.php");
                                         ?>
                                     ">
 
+                                            <?php
+                                            echo htmlspecialchars(
+                                                ucfirst(
+                                                    $recentUser['role']
+                                                )
+                                            );
+                                            ?>
+
+                                        </span>
+
+                                    </td>
+
+                                    <td>
                                         <?php
-                                        echo htmlspecialchars(
-                                            ucfirst(
-                                                $recentUser['role']
+                                        echo date(
+                                            "M d, Y",
+                                            strtotime(
+                                                $recentUser['created_at']
                                             )
                                         );
                                         ?>
+                                    </td>
 
-                                    </span>
+                                </tr>
 
-                                </td>
-
-                                <td>
-                                    <?php
-                                    echo date(
-                                        "M d, Y",
-                                        strtotime(
-                                            $recentUser['created_at']
-                                        )
-                                    );
-                                    ?>
-                                </td>
-
-                            </tr>
-
-                        <?php } ?>
+                            <?php } ?>
 
                         </tbody>
 
@@ -562,7 +512,6 @@ include("header.php");
                 </div>
 
             </div>
-
 
             <!-- RECENT BOOKS -->
 
@@ -583,7 +532,6 @@ include("header.php");
                     </a>
 
                 </div>
-
 
                 <div class="dashboard-table-wrapper">
 
@@ -615,57 +563,57 @@ include("header.php");
 
                         <tbody>
 
-                        <?php while ($adminBook = $recentAdminBooks->fetch_assoc()) { ?>
+                            <?php while ($adminBook = $recentAdminBooks->fetch_assoc()) { ?>
 
-                            <tr>
+                                <tr>
 
-                                <td>
-                                    <?php
-                                    echo htmlspecialchars(
-                                        $adminBook['title']
-                                    );
-                                    ?>
-                                </td>
-
-                                <td>
-                                    @<?php
-                                    echo htmlspecialchars(
-                                        $adminBook['username']
-                                    );
-                                    ?>
-                                </td>
-
-                                <td>
-                                    <?php
-                                    echo htmlspecialchars(
-                                        $adminBook['type']
-                                    );
-                                    ?>
-                                </td>
-
-                                <td>
-
-                                    <?php if ($adminBook['type'] === 'Sell') { ?>
-
-                                        Rs.
+                                    <td>
                                         <?php
-                                        echo number_format(
-                                            (float)$adminBook['price'],
-                                            2
+                                        echo htmlspecialchars(
+                                            $adminBook['title']
                                         );
                                         ?>
+                                    </td>
 
-                                    <?php } else { ?>
+                                    <td>
+                                        @<?php
+                                        echo htmlspecialchars(
+                                            $adminBook['username']
+                                        );
+                                        ?>
+                                    </td>
 
-                                        Exchange
+                                    <td>
+                                        <?php
+                                        echo htmlspecialchars(
+                                            $adminBook['type']
+                                        );
+                                        ?>
+                                    </td>
 
-                                    <?php } ?>
+                                    <td>
 
-                                </td>
+                                        <?php if ($adminBook['type'] === 'Sell') { ?>
 
-                            </tr>
+                                            Rs.
+                                            <?php
+                                            echo number_format(
+                                                (float) $adminBook['price'],
+                                                2
+                                            );
+                                            ?>
 
-                        <?php } ?>
+                                        <?php } else { ?>
+
+                                            Exchange
+
+                                        <?php } ?>
+
+                                    </td>
+
+                                </tr>
+
+                            <?php } ?>
 
                         </tbody>
 
@@ -675,16 +623,13 @@ include("header.php");
 
             </div>
 
-
         <?php } else { ?>
-
 
             <!-- =================================
                  USER DASHBOARD
             ================================== -->
 
             <div class="dashboard-stats">
-
 
                 <div class="stat-card">
 
@@ -701,7 +646,7 @@ include("header.php");
                         <strong>
                             <?php
                             echo number_format(
-                                (int)($myBooks['total'] ?? 0)
+                                (int) ($myBooks['total'] ?? 0)
                             );
                             ?>
                         </strong>
@@ -709,7 +654,6 @@ include("header.php");
                     </div>
 
                 </div>
-
 
                 <div class="stat-card">
 
@@ -726,7 +670,7 @@ include("header.php");
                         <strong>
                             <?php
                             echo number_format(
-                                (int)($myBooks['sell_count'] ?? 0)
+                                (int) ($myBooks['sell_count'] ?? 0)
                             );
                             ?>
                         </strong>
@@ -734,7 +678,6 @@ include("header.php");
                     </div>
 
                 </div>
-
 
                 <div class="stat-card">
 
@@ -751,7 +694,7 @@ include("header.php");
                         <strong>
                             <?php
                             echo number_format(
-                                (int)($myBooks['exchange_count'] ?? 0)
+                                (int) ($myBooks['exchange_count'] ?? 0)
                             );
                             ?>
                         </strong>
@@ -759,7 +702,6 @@ include("header.php");
                     </div>
 
                 </div>
-
 
                 <div class="stat-card">
 
@@ -783,7 +725,6 @@ include("header.php");
 
             </div>
 
-
             <!-- USER QUICK ACTIONS -->
 
             <div class="dashboard-panel">
@@ -804,14 +745,9 @@ include("header.php");
 
                 </div>
 
-
                 <div class="user-actions">
 
-
-                    <a
-                        href="addbook.php"
-                        class="user-action-card"
-                    >
+                    <a href="addbook.php" class="user-action-card">
 
                         <i class="fa-solid fa-plus"></i>
 
@@ -829,11 +765,7 @@ include("header.php");
 
                     </a>
 
-
-                    <a
-                        href="mylistings.php"
-                        class="user-action-card"
-                    >
+                    <a href="mylistings.php" class="user-action-card">
 
                         <i class="fa-solid fa-book"></i>
 
@@ -844,18 +776,14 @@ include("header.php");
                             </strong>
 
                             <span>
-                               serach edit and manage your listings
+                                serach edit and manage your listings
                             </span>
 
                         </div>
 
                     </a>
 
-
-                    <a
-                        href="editprofile.php"
-                        class="user-action-card"
-                    >
+                    <a href="editprofile.php" class="user-action-card">
 
                         <i class="fa-solid fa-user-pen"></i>
 
@@ -873,11 +801,7 @@ include("header.php");
 
                     </a>
 
-
-                    <a
-                        href="browsebook.php"
-                        class="user-action-card"
-                    >
+                    <a href="browsebook.php" class="user-action-card">
 
                         <i class="fa-solid fa-magnifying-glass"></i>
 
@@ -899,7 +823,6 @@ include("header.php");
 
             </div>
 
-
             <!-- MY RECENT LISTINGS -->
 
             <div class="dashboard-panel">
@@ -920,7 +843,6 @@ include("header.php");
 
                 </div>
 
-
                 <?php if ($recentBooks->num_rows > 0) { ?>
 
                     <div class="dashboard-book-list">
@@ -929,10 +851,7 @@ include("header.php");
 
                             <div class="dashboard-book">
 
-                                <img
-                                    src="images/<?php echo htmlspecialchars($book['image']); ?>"
-                                    alt="Book"
-                                >
+                                <img src="images/<?php echo htmlspecialchars($book['image']); ?>" alt="Book">
 
                                 <div>
 
@@ -962,10 +881,7 @@ include("header.php");
 
                                 </div>
 
-
-                                <a
-                                    href="bookdetails.php?id=<?php echo (int)$book['id']; ?>"
-                                >
+                                <a href="bookdetails.php?id=<?php echo (int) $book['id']; ?>">
                                     View
                                 </a>
 
@@ -989,10 +905,7 @@ include("header.php");
                             Start by listing your first book.
                         </p>
 
-                        <a
-                            href="addbook.php"
-                            class="btn-primary"
-                        >
+                        <a href="addbook.php" class="btn-primary">
                             Add Book
                         </a>
 
@@ -1007,7 +920,6 @@ include("header.php");
     </div>
 
 </section>
-
 
 <?php
 

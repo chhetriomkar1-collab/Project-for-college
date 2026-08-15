@@ -74,29 +74,20 @@ include("header.php");
         </div>
 
     </div>
-<div class="hero-right">
+    <div class="hero-right">
 
-    <?php if (count($heroBooks) > 0) { ?>
+        <?php if (count($heroBooks) > 0) { ?>
 
-        <img
-            id="heroBook"
-            src="<?php echo htmlspecialchars($heroBooks[0]); ?>"
-            alt="Book"
-        >
+            <img id="heroBook" src="<?php echo htmlspecialchars($heroBooks[0]); ?>" alt="Book">
 
-    <?php } else { ?>
+        <?php } else { ?>
 
-        <img
-            id="heroBook"
-            src="images/book.jpg"
-            alt="Books"
-        >
+            <img id="heroBook" src="images/book.jpg" alt="Books">
 
-    <?php } ?>
+        <?php } ?>
 
-</div>
+    </div>
 </section>
-
 
 <!-- LATEST BOOKS -->
 
@@ -111,7 +102,6 @@ include("header.php");
         </p>
 
     </div>
-
 
     <div class="books-grid">
 
@@ -130,73 +120,71 @@ include("header.php");
 
             while ($row = mysqli_fetch_assoc($result)) {
 
-        ?>
+                ?>
 
-            <div class="book-card">
+                <div class="book-card">
 
-                <img
-                    src="images/<?php echo htmlspecialchars($row['image']); ?>"
-                    alt="<?php echo htmlspecialchars($row['title']); ?>"
-                >
+                    <img src="images/<?php echo htmlspecialchars($row['image']); ?>"
+                        alt="<?php echo htmlspecialchars($row['title']); ?>">
 
-                <div class="book-info">
+                    <div class="book-info">
 
-                    <h3>
-                        <?php echo htmlspecialchars($row['title']); ?>
-                    </h3>
+                        <h3>
+                            <?php echo htmlspecialchars($row['title']); ?>
+                        </h3>
 
-                    <p>
-                        <strong>Author:</strong>
-                        <?php echo htmlspecialchars($row['author']); ?>
-                    </p>
+                        <p>
+                            <strong>Author:</strong>
+                            <?php echo htmlspecialchars($row['author']); ?>
+                        </p>
 
-                    <p>
-                        <strong>Category:</strong>
-                        <?php echo htmlspecialchars($row['category']); ?>
-                    </p>
+                        <p>
+                            <strong>Category:</strong>
+                            <?php echo htmlspecialchars($row['category']); ?>
+                        </p>
 
-                    <p>
-                        <strong>Condition:</strong>
-                        <?php echo htmlspecialchars($row['book_condition']); ?>
-                    </p>
+                        <p>
+                            <strong>Condition:</strong>
+                            <?php echo htmlspecialchars($row['book_condition']); ?>
+                        </p>
 
-                    <?php if ($row['type'] === 'Sell') { ?>
+                        <?php if ($row['type'] === 'Sell') { ?>
 
-                        <h4>
-                            Rs.
-                            <?php echo number_format($row['price']); ?>
-                        </h4>
+                            <h4>
+                                Rs.
+                                <?php echo number_format($row['price']); ?>
+                            </h4>
 
-                    <?php } else { ?>
+                        <?php } else { ?>
 
-                        <h4 style="color:green;">
-                            Available for Exchange
-                        </h4>
+                            <h4 style="color:green;">
+                                Available for Exchange
+                            </h4>
 
-                    <?php } ?>
+                        <?php } ?>
 
-                    <small>
-                        Posted by
-                        <?php echo htmlspecialchars($row['username']); ?>
-                    </small>
+                        <small>
+                            Posted by
+                            <?php echo htmlspecialchars($row['username']); ?>
+                        </small>
+
+                    </div>
 
                 </div>
 
-            </div>
-
-        <?php
+                <?php
 
             }
 
         } else {
 
-        ?>
+            ?>
 
             <p class="no-books">
                 No books have been listed yet.
             </p>
 
-        <?php
+            <?php
 
         }
 
@@ -204,13 +192,9 @@ include("header.php");
 
     </div>
 
-
     <div class="browse-all">
 
-        <a
-            href="browsebook.php"
-            class="btn-primary"
-        >
+        <a href="browsebook.php" class="btn-primary">
             Browse All Books
         </a>
 
@@ -219,44 +203,41 @@ include("header.php");
 </section>
 <script>
 
-const heroBooks = <?php
+    const heroBooks = <?php
     echo json_encode($heroBooks);
-?>;
+    ?>;
 
-const heroBook =
-    document.getElementById("heroBook");
+    const heroBook =
+        document.getElementById("heroBook");
 
+    let currentBook = 0;
 
-let currentBook = 0;
+    if (heroBooks.length > 1) {
 
+        setInterval(function () {
 
-if (heroBooks.length > 1) {
+            currentBook++;
 
-    setInterval(function () {
+            if (currentBook >= heroBooks.length) {
+                currentBook = 0;
+            }
 
-        currentBook++;
+            // Fade out
+            heroBook.style.opacity = "0";
 
-        if (currentBook >= heroBooks.length) {
-            currentBook = 0;
-        }
+            setTimeout(function () {
 
-        // Fade out
-        heroBook.style.opacity = "0";
+                heroBook.src =
+                    heroBooks[currentBook];
 
+                // Fade back in
+                heroBook.style.opacity = "1";
 
-        setTimeout(function () {
+            }, 300);
 
-            heroBook.src =
-                heroBooks[currentBook];
+        }, 5000);
 
-            // Fade back in
-            heroBook.style.opacity = "1";
-
-        }, 300);
-
-    }, 5000);
-
-}
+    }
 
 </script>
 

@@ -33,12 +33,12 @@ if (isset($_POST['login'])) {
 
             if (password_verify($password, $user['password'])) {
 
-              $_SESSION['id'] = $user['id'];
-              $_SESSION['user_id'] = $user['id'];
-              $_SESSION['username'] = $user['username'];
-              $_SESSION['fullname'] = $user['fullname'];
-              $_SESSION['role'] = $user['role'];
-              
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['fullname'] = $user['fullname'];
+                $_SESSION['role'] = $user['role'];
+
                 header("Location: indexp.php");
                 exit();
 
@@ -66,15 +66,9 @@ if (isset($_POST['login'])) {
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link
-        rel="stylesheet"
-        href="css/login.css"
-    >
+    <link rel="stylesheet" href="css/login.css">
 
     <title>Booked UP - Login</title>
 
@@ -82,76 +76,59 @@ if (isset($_POST['login'])) {
 
 <body>
 
-<div class="login-container">
+    <div class="login-container">
 
-    <div class="login-card">
+        <div class="login-card">
 
-        <h1>Booked UP</h1>
+            <h1>Booked UP</h1>
 
-        <p class="subtitle">
-            Buy • Sell • Exchange Books
-        </p>
-
-        <?php if ($error != "") { ?>
-
-            <p class="error">
-                <?php echo htmlspecialchars($error); ?>
+            <p class="subtitle">
+                Buy • Sell • Exchange Books
             </p>
 
-        <?php } ?>
+            <?php if ($error != "") { ?>
 
-        <form method="POST">
+                <p class="error">
+                    <?php echo htmlspecialchars($error); ?>
+                </p>
 
-            <label>Username</label>
+            <?php } ?>
 
-            <input
-                class="input1"
-                type="text"
-                name="username"
-                required
-            >
+            <form method="POST">
 
-            <label>Password</label>
+                <label>Username</label>
 
-            <input
-                class="input1"
-                type="password"
-                name="password"
-                required
-            >
+                <input class="input1" type="text" name="username" required>
 
-            <div class="remember">
+                <label>Password</label>
 
-                <input
-                    type="checkbox"
-                    name="remember"
-                >
+                <input class="input1" type="password" name="password" required>
 
-                <span>Remember Me</span>
+                <div class="remember">
 
-            </div>
+                    <input type="checkbox" name="remember">
 
-            <button
-                class="logger"
-                type="submit"
-                name="login"
-            >
-                Login
-            </button>
+                    <span>Remember Me</span>
 
-        </form>
+                </div>
 
-        <a href="#">
-            Forgot Password?
-        </a>
+                <button class="logger" type="submit" name="login">
+                    Login
+                </button>
 
-        <a href="registerp.php">
-            Create New Account
-        </a>
+            </form>
+
+            <a href="#">
+                Forgot Password?
+            </a>
+
+            <a href="registerp.php">
+                Create New Account
+            </a>
+
+        </div>
 
     </div>
-
-</div>
 
 </body>
 

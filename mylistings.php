@@ -3,10 +3,7 @@
 session_start();
 include("conn.php");
 
-
-// ==========================================
 // LOGIN CHECK
-// ==========================================
 
 $user_id = $_SESSION['user_id']
     ?? $_SESSION['id']
@@ -19,15 +16,11 @@ if (!$user_id) {
 
 $user_id = (int) $user_id;
 
-
-// ==========================================
 // DELETE BOOK
-// ==========================================
 
 if (isset($_POST['delete_book'])) {
 
     $book_id = (int) $_POST['book_id'];
-
 
     // Get image first
 
@@ -59,7 +52,6 @@ if (isset($_POST['delete_book'])) {
 
     $imageStmt->close();
 
-
     // Delete only if it belongs to current user
 
     $deleteStmt = $conn->prepare("
@@ -78,7 +70,6 @@ if (isset($_POST['delete_book'])) {
 
     $deleteStmt->close();
 
-
     // Delete image
 
     if (!empty($imageName)) {
@@ -92,16 +83,12 @@ if (isset($_POST['delete_book'])) {
         }
     }
 
-
     header("Location: mylistings.php");
 
     exit();
 }
 
-
-// ==========================================
 // FILTERS
-// ==========================================
 
 $search = trim($_GET['search'] ?? "");
 
@@ -109,10 +96,7 @@ $type = trim($_GET['type'] ?? "");
 
 $condition = trim($_GET['condition'] ?? "");
 
-
-// ==========================================
 // BASE QUERY
-// ==========================================
 
 $sql = "
     SELECT *
@@ -120,10 +104,7 @@ $sql = "
     WHERE user_id = ?
 ";
 
-
-// ==========================================
 // SEARCH
-// ==========================================
 
 if ($search !== "") {
 
@@ -136,10 +117,7 @@ if ($search !== "") {
     ";
 }
 
-
-// ==========================================
 // TYPE
-// ==========================================
 
 if ($type === "Sell" || $type === "Exchange") {
 
@@ -148,10 +126,7 @@ if ($type === "Sell" || $type === "Exchange") {
     ";
 }
 
-
-// ==========================================
 // CONDITION
-// ==========================================
 
 $allowedConditions = [
     "New",
@@ -168,31 +143,21 @@ if (in_array($condition, $allowedConditions)) {
     ";
 }
 
-
-// ==========================================
 // ORDER
-// ==========================================
 
 $sql .= "
     ORDER BY created_at DESC
 ";
 
-
-// ==========================================
 // PREPARE
-// ==========================================
 
 $stmt = $conn->prepare($sql);
 
-
-// ==========================================
 // BIND PARAMETERS
-// ==========================================
 
 $types = "i";
 
 $params = [$user_id];
-
 
 if ($search !== "") {
 
@@ -205,7 +170,6 @@ if ($search !== "") {
     $params[] = $searchValue;
 }
 
-
 if ($type === "Sell" || $type === "Exchange") {
 
     $types .= "s";
@@ -213,14 +177,12 @@ if ($type === "Sell" || $type === "Exchange") {
     $params[] = $type;
 }
 
-
 if (in_array($condition, $allowedConditions)) {
 
     $types .= "s";
 
     $params[] = $condition;
 }
-
 
 // Dynamic bind_param
 
@@ -237,15 +199,11 @@ call_user_func_array(
     $bindValues
 );
 
-
 $stmt->execute();
 
 $books = $stmt->get_result();
 
-
-// ==========================================
 // USER INFORMATION
-// ==========================================
 
 $userStmt = $conn->prepare("
     SELECT
@@ -269,7 +227,6 @@ $user = $userStmt
 
 $userStmt->close();
 
-
 include("header.php");
 
 ?>
@@ -278,7 +235,6 @@ include("header.php");
 <section class="my-listings-section">
 
     <div class="my-listings-container">
-
 
         <!-- =================================
              HEADER
@@ -306,11 +262,7 @@ include("header.php");
 
             </div>
 
-
-            <a
-                href="addbook.php"
-                class="add-listing-btn"
-            >
+            <a href="addbook.php" class="add-listing-btn">
 
                 <i class="fa-solid fa-plus"></i>
 
@@ -320,29 +272,20 @@ include("header.php");
 
         </div>
 
-
         <!-- =================================
              FILTERS
         ================================== -->
 
-        <form
-            method="GET"
-            class="my-listing-filters"
-        >
+        <form method="GET" class="my-listing-filters">
 
             <div class="my-listing-search">
 
                 <i class="fa-solid fa-magnifying-glass"></i>
 
-                <input
-                    type="text"
-                    name="search"
-                    placeholder="Search your listings..."
-                    value="<?php echo htmlspecialchars($search); ?>"
-                >
+                <input type="text" name="search" placeholder="Search your listings..."
+                    value="<?php echo htmlspecialchars($search); ?>">
 
             </div>
-
 
             <select name="type">
 
@@ -350,30 +293,23 @@ include("header.php");
                     All Types
                 </option>
 
-                <option
-                    value="Sell"
-                    <?php
-                    echo $type === "Sell"
-                        ? "selected"
-                        : "";
-                    ?>
-                >
+                <option value="Sell" <?php
+                echo $type === "Sell"
+                    ? "selected"
+                    : "";
+                ?>>
                     Sell
                 </option>
 
-                <option
-                    value="Exchange"
-                    <?php
-                    echo $type === "Exchange"
-                        ? "selected"
-                        : "";
-                    ?>
-                >
+                <option value="Exchange" <?php
+                echo $type === "Exchange"
+                    ? "selected"
+                    : "";
+                ?>>
                     Exchange
                 </option>
 
             </select>
-
 
             <select name="condition">
 
@@ -383,14 +319,11 @@ include("header.php");
 
                 <?php foreach ($allowedConditions as $option) { ?>
 
-                    <option
-                        value="<?php echo htmlspecialchars($option); ?>"
-                        <?php
-                        echo $condition === $option
-                            ? "selected"
-                            : "";
-                        ?>
-                    >
+                    <option value="<?php echo htmlspecialchars($option); ?>" <?php
+                       echo $condition === $option
+                           ? "selected"
+                           : "";
+                       ?>>
                         <?php echo htmlspecialchars($option); ?>
                     </option>
 
@@ -398,23 +331,17 @@ include("header.php");
 
             </select>
 
-
             <button type="submit">
 
                 Apply
 
             </button>
 
-
-            <a
-                href="mylistings.php"
-                class="clear-listing-filter"
-            >
+            <a href="mylistings.php" class="clear-listing-filter">
                 Clear
             </a>
 
         </form>
-
 
         <!-- =================================
              RESULTS
@@ -428,17 +355,12 @@ include("header.php");
 
                     <div class="my-listing-card">
 
-
                         <!-- IMAGE -->
 
-                        <img
-                            src="images/<?php echo htmlspecialchars($book['image']); ?>"
-                            alt="<?php echo htmlspecialchars($book['title']); ?>"
-                        >
-
+                        <img src="images/<?php echo htmlspecialchars($book['image']); ?>"
+                            alt="<?php echo htmlspecialchars($book['title']); ?>">
 
                         <div class="my-listing-content">
-
 
                             <div class="my-listing-top">
 
@@ -461,7 +383,6 @@ include("header.php");
 
                             </div>
 
-
                             <h2>
 
                                 <?php
@@ -471,7 +392,6 @@ include("header.php");
                                 ?>
 
                             </h2>
-
 
                             <p class="listing-author">
 
@@ -483,7 +403,6 @@ include("header.php");
                                 ?>
 
                             </p>
-
 
                             <div class="listing-meta">
 
@@ -501,7 +420,6 @@ include("header.php");
 
                                 </span>
 
-
                                 <span>
 
                                     <strong>
@@ -518,7 +436,6 @@ include("header.php");
 
                             </div>
 
-
                             <?php if ($book['type'] === "Sell") { ?>
 
                                 <div class="my-listing-price">
@@ -526,7 +443,7 @@ include("header.php");
                                     Rs.
                                     <?php
                                     echo number_format(
-                                        (float)$book['price'],
+                                        (float) $book['price'],
                                         2
                                     );
                                     ?>
@@ -543,7 +460,6 @@ include("header.php");
 
                             <?php } ?>
 
-
                             <small class="listing-date">
 
                                 Listed
@@ -558,46 +474,25 @@ include("header.php");
 
                             </small>
 
-
                             <!-- ACTIONS -->
 
                             <div class="my-listing-actions">
 
-
-                                <a
-                                    href="bookdetails.php?id=<?php echo (int)$book['id']; ?>"
-                                    class="listing-view-action"
-                                >
+                                <a href="bookdetails.php?id=<?php echo (int) $book['id']; ?>" class="listing-view-action">
                                     <i class="fa-solid fa-eye"></i>
                                     View
                                 </a>
 
-
-                                <a
-                                    href="editbook.php?id=<?php echo (int)$book['id']; ?>"
-                                    class="listing-edit-action"
-                                >
+                                <a href="editbook.php?id=<?php echo (int) $book['id']; ?>" class="listing-edit-action">
                                     <i class="fa-solid fa-pen"></i>
                                     Edit
                                 </a>
 
+                                <form method="POST" onsubmit="return confirm('Are you sure you want to delete this listing?');">
 
-                                <form
-                                    method="POST"
-                                    onsubmit="return confirm('Are you sure you want to delete this listing?');"
-                                >
+                                    <input type="hidden" name="book_id" value="<?php echo (int) $book['id']; ?>">
 
-                                    <input
-                                        type="hidden"
-                                        name="book_id"
-                                        value="<?php echo (int)$book['id']; ?>"
-                                    >
-
-                                    <button
-                                        type="submit"
-                                        name="delete_book"
-                                        class="listing-delete-action"
-                                    >
+                                    <button type="submit" name="delete_book" class="listing-delete-action">
                                         <i class="fa-solid fa-trash"></i>
                                         Delete
                                     </button>
@@ -616,7 +511,6 @@ include("header.php");
 
         <?php } else { ?>
 
-
             <!-- EMPTY -->
 
             <div class="my-listings-empty">
@@ -633,10 +527,7 @@ include("header.php");
                         Try changing your search or filters.
                     </p>
 
-                    <a
-                        href="mylistings.php"
-                        class="btn-primary"
-                    >
+                    <a href="mylistings.php" class="btn-primary">
                         Show All Listings
                     </a>
 
@@ -646,10 +537,7 @@ include("header.php");
                         You haven't listed any books yet.
                     </p>
 
-                    <a
-                        href="addbook.php"
-                        class="btn-primary"
-                    >
+                    <a href="addbook.php" class="btn-primary">
                         List Your First Book
                     </a>
 
@@ -657,13 +545,11 @@ include("header.php");
 
             </div>
 
-
         <?php } ?>
 
     </div>
 
 </section>
-
 
 <?php
 

@@ -23,23 +23,13 @@ if (isset($_POST['register'])) {
     ) {
         $message = "Please fill in all fields.";
         $messageType = "error";
-    }
-
-    // Check password match
-    elseif ($password !== $confirm_password) {
+    } elseif ($password !== $confirm_password) {
         $message = "Passwords do not match.";
         $messageType = "error";
-    }
-
-    // Check password length
-    elseif (strlen($password) < 6) {
-        $message = "Password must be at least 6 characters.";
+    } elseif (strlen($password) < 8) {
+        $message = "Password must be at least 8 characters.";
         $messageType = "error";
-    }
-
-    else {
-
-        // Check whether username or email already exists
+    } else {
         $check = $conn->prepare(
             "SELECT id FROM users WHERE username = ? OR email = ?"
         );
@@ -107,94 +97,65 @@ if (isset($_POST['register'])) {
 
 <body>
 
-<div class="register-container">
+    <div class="register-container">
 
-    <div class="register-card">
+        <div class="register-card">
 
-        <h1>Create Account</h1>
+            <h1>Create Account</h1>
 
-        <p class="subtitle">
-            Get Booked UP today
-        </p>
-
-        <?php if ($message != "") { ?>
-
-            <p class="<?php echo $messageType; ?>">
-                <?php echo htmlspecialchars($message); ?>
+            <p class="subtitle">
+                Get Booked UP today
             </p>
 
-        <?php } ?>
+            <?php if ($message != "") { ?>
 
-        <form method="POST">
+                <p class="<?php echo $messageType; ?>">
+                    <?php echo htmlspecialchars($message); ?>
+                </p>
 
-            <label>Full Name</label>
+            <?php } ?>
 
-            <input
-                class="input1"
-                type="text"
-                name="fullname"
-                required
-            >
+            <form method="POST">
 
-            <label>Username</label>
+                <label>Full Name</label>
 
-            <input
-                class="input1"
-                type="text"
-                name="username"
-                required
-            >
+                <input class="input1" type="text" name="fullname" required>
 
-            <label>Email</label>
+                <label>Username</label>
 
-            <input
-                class="input1"
-                type="email"
-                name="email"
-                required
-            >
+                <input class="input1" type="text" name="username" required>
 
-            <label>Password</label>
+                <label>Email</label>
 
-            <input
-                class="input1"
-                type="password"
-                name="password"
-                required
-            >
+                <input class="input1" type="email" name="email" required>
 
-            <label>Confirm Password</label>
+                <label>Password</label>
 
-            <input
-                class="input1"
-                type="password"
-                name="confirm_password"
-                required
-            >
+                <input class="input1" type="password" name="password" required>
 
-            <button
-                class="register-btn"
-                type="submit"
-                name="register"
-            >
-                Create Account
-            </button>
+                <label>Confirm Password</label>
 
-        </form>
+                <input class="input1" type="password" name="confirm_password" required>
 
-        <div class="divider">or</div>
+                <button class="register-btn" type="submit" name="register">
+                    Create Account
+                </button>
 
-        <div class="small-text">
-            Already have an account?
+            </form>
+
+            <div class="divider">or</div>
+
+            <div class="small-text">
+                Already have an account?
+            </div>
+
+            <a href="login.php">
+                Login Here
+            </a>
+
         </div>
 
-        <a href="login.php">
-            Login Here
-        </a>
-
     </div>
-
-</div>
 
 </body>
 

@@ -13,61 +13,61 @@ if (isset($_POST['submit'])) {
 
     $title = trim($_POST['title']);
     $author = trim($_POST['author']);
-$category = trim($_POST['category']);
+    $category = trim($_POST['category']);
 
-if ($category === "Other") {
+    if ($category === "Other") {
 
-    $other_category =
-        trim($_POST['other_category'] ?? "");
+        $other_category =
+            trim($_POST['other_category'] ?? "");
 
-    if ($other_category === "") {
+        if ($other_category === "") {
 
-        die("Please enter your category.");
+            die("Please enter your category.");
 
+        }
+
+        $category = $other_category;
     }
-
-    $category = $other_category;
-}
     $condition = trim($_POST['condition']);
     $type = trim($_POST['type']);
     $price = trim($_POST['price']);
     if ($type === "Exchange") {
 
-    $price = "";
+        $price = "";
 
-} elseif ($type === "Sell") {
+    } elseif ($type === "Sell") {
 
-    if ($price === "") {
+        if ($price === "") {
 
-        die("Please enter a price for a sale listing.");
+            die("Please enter a price for a sale listing.");
+
+        }
 
     }
-
-}
     $description = trim($_POST['description']);
 
- $imageName = "";
+    $imageName = "";
 
-if(isset($_FILES['image']) && $_FILES['image']['error'] == 0){
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
 
-    $allowed = ['jpg','jpeg','png','webp'];
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
 
-    $image = $_FILES['image']['name'];
+        $image = $_FILES['image']['name'];
 
-    $extension = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($image, PATHINFO_EXTENSION));
 
-    if(in_array($extension,$allowed)){
+        if (in_array($extension, $allowed)) {
 
-        $imageName = uniqid() . "." . $extension;
+            $imageName = uniqid() . "." . $extension;
 
-        move_uploaded_file(
-            $_FILES['image']['tmp_name'],
-            "images/" . $imageName
-        );
-    }else{
-        die("Only JPG, JPEG, PNG and WEBP files are allowed.");
+            move_uploaded_file(
+                $_FILES['image']['tmp_name'],
+                "images/" . $imageName
+            );
+        } else {
+            die("Only JPG, JPEG, PNG and WEBP files are allowed.");
+        }
     }
-}
 
     $stmt = $conn->prepare("INSERT INTO books
     (user_id,title,author,category,book_condition,type,price,description,image)
@@ -86,12 +86,12 @@ if(isset($_FILES['image']) && $_FILES['image']['error'] == 0){
         $imageName
     );
 
-    if($stmt->execute()){
+    if ($stmt->execute()) {
 
         header("Location: indexp.php");
         exit();
 
-    }else{
+    } else {
 
         echo "Error : " . $stmt->error;
 

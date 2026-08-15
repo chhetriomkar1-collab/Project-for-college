@@ -47,13 +47,10 @@ include("header.php");
 
         <div class="book-details-image">
 
-            <img
-                src="images/<?php echo htmlspecialchars($book['image']); ?>"
-                alt="<?php echo htmlspecialchars($book['title']); ?>"
-            >
+            <img src="images/<?php echo htmlspecialchars($book['image']); ?>"
+                alt="<?php echo htmlspecialchars($book['title']); ?>">
 
         </div>
-
 
         <div class="book-details-info">
 
@@ -71,8 +68,6 @@ include("header.php");
                     <?php echo htmlspecialchars($book['author']); ?>
                 </strong>
             </p>
-
-
 
             <div class="detail-row">
 
@@ -99,7 +94,7 @@ include("header.php");
                 <div class="book-price">
 
                     Rs.
-                    <?php echo number_format((float)$book['price'], 2); ?>
+                    <?php echo number_format((float) $book['price'], 2); ?>
 
                 </div>
 
@@ -137,9 +132,6 @@ include("header.php");
 
             </div>
 
-
-
-
             <div class="seller-box">
 
                 <h3>Seller</h3>
@@ -158,25 +150,17 @@ include("header.php");
 
             </div>
 
-
             <?php if (isset($_SESSION['user_id'])) { ?>
 
                 <?php if ($_SESSION['user_id'] == $book['user_id']) { ?>
 
-                    <a
-                        href="profile.php"
-                        class="details-btn"
-                    >
+                    <a href="profile.php" class="details-btn">
                         Manage Your Listing
                     </a>
 
                 <?php } else { ?>
 
-                    <button
-                        type="button"
-                        class="details-btn"
-                        onclick="alert('Contact feature will be added next.')"
-                    >
+                    <button type="button" class="details-btn" onclick="alert('Contact feature will be added next.')">
                         Contact Seller
                     </button>
 
@@ -184,19 +168,13 @@ include("header.php");
 
             <?php } else { ?>
 
-                <a
-                    href="login.php"
-                    class="details-btn"
-                >
+                <a href="login.php" class="details-btn">
                     Login to Contact Seller
                 </a>
 
             <?php } ?>
 
-            <a
-                href="browsebook.php"
-                class="back-link"
-            >
+            <a href="browsebook.php" class="back-link">
                 ← Back to Browse Books
             </a>
 
@@ -205,7 +183,6 @@ include("header.php");
     </div>
 
 </section>
-
 
 <?php
 

@@ -10,9 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-// ==========================================
 // FETCH USER
-// ==========================================
 
 $stmt = $conn->prepare("
     SELECT
@@ -44,10 +42,7 @@ $user = $userResult->fetch_assoc();
 
 $stmt->close();
 
-
-// ==========================================
 // DELETE BOOK
-// ==========================================
 
 if (isset($_POST['delete_book'])) {
 
@@ -92,7 +87,6 @@ if (isset($_POST['delete_book'])) {
 
         $deleteStmt->close();
 
-
         // Delete image from server
         if (!empty($book['image'])) {
 
@@ -110,10 +104,7 @@ if (isset($_POST['delete_book'])) {
     exit();
 }
 
-
-// ==========================================
 // FETCH USER'S BOOKS
-// ==========================================
 
 $bookStmt = $conn->prepare("
     SELECT *
@@ -131,21 +122,16 @@ $bookStmt->execute();
 
 $booksResult = $bookStmt->get_result();
 
-
-// ==========================================
 // HEADER
-// ==========================================
 
 include("header.php");
 
 ?>
 <link rel="stylesheet" href="css/profile.css">
 
-
 <section class="profile-section">
 
     <div class="profile-container">
-
 
         <!-- =================================
              PROFILE CARD
@@ -157,10 +143,7 @@ include("header.php");
 
                 <?php if (!empty($user['profile_image'])) { ?>
 
-                    <img
-                        src="uploads/<?php echo htmlspecialchars($user['profile_image']); ?>"
-                        alt="Profile Image"
-                    >
+                    <img src="uploads/<?php echo htmlspecialchars($user['profile_image']); ?>" alt="Profile Image">
 
                 <?php } else { ?>
 
@@ -174,11 +157,9 @@ include("header.php");
 
             </div>
 
-
             <h1>
                 <?php echo htmlspecialchars($user['fullname']); ?>
             </h1>
-
 
             <p class="profile-username">
 
@@ -186,20 +167,17 @@ include("header.php");
 
             </p>
 
-
             <p class="profile-email">
 
                 <?php echo htmlspecialchars($user['email']); ?>
 
             </p>
 
-
             <span class="profile-role">
 
                 <?php echo htmlspecialchars(ucfirst($user['role'])); ?>
 
             </span>
-
 
             <p class="member-since">
 
@@ -213,16 +191,11 @@ include("header.php");
 
             </p>
 
-
-            <a
-                href="editprofile.php"
-                class="edit-profile-btn"
-            >
+            <a href="editprofile.php" class="edit-profile-btn">
                 Edit Profile
             </a>
 
         </div>
-
 
         <!-- =================================
              MY LISTINGS
@@ -244,17 +217,12 @@ include("header.php");
 
                 </div>
 
-
-                <a
-                    href="addbook.php"
-                    class="add-listing-btn"
-                >
+                <a href="addbook.php" class="add-listing-btn">
                     <i class="fa-solid fa-plus"></i>
                     Add Book
                 </a>
 
             </div>
-
 
             <div class="my-books-grid">
 
@@ -264,138 +232,109 @@ include("header.php");
 
                     while ($book = $booksResult->fetch_assoc()) {
 
-                ?>
+                        ?>
 
-                    <div class="my-book-card">
+                        <div class="my-book-card">
 
+                            <!-- IMAGE -->
 
-                        <!-- IMAGE -->
+                            <img src="images/<?php echo htmlspecialchars($book['image']); ?>"
+                                alt="<?php echo htmlspecialchars($book['title']); ?>">
 
-                        <img
-                            src="images/<?php echo htmlspecialchars($book['image']); ?>"
-                            alt="<?php echo htmlspecialchars($book['title']); ?>"
-                        >
+                            <div class="my-book-info">
 
+                                <h3>
 
-                        <div class="my-book-info">
-
-
-                            <h3>
-
-                                <?php
-                                echo htmlspecialchars(
-                                    $book['title']
-                                );
-                                ?>
-
-                            </h3>
-
-
-                            <p>
-
-                                <strong>Author:</strong>
-
-                                <?php
-                                echo htmlspecialchars(
-                                    $book['author']
-                                );
-                                ?>
-
-                            </p>
-
-
-                            <p>
-
-                                <strong>Category:</strong>
-
-                                <?php
-                                echo htmlspecialchars(
-                                    $book['category']
-                                );
-                                ?>
-
-                            </p>
-
-
-                            <?php if ($book['type'] === "Sell") { ?>
-
-                                <h4>
-
-                                    Rs.
                                     <?php
-                                    echo number_format(
-                                        (float)$book['price'],
-                                        2
+                                    echo htmlspecialchars(
+                                        $book['title']
                                     );
                                     ?>
 
-                                </h4>
+                                </h3>
 
-                            <?php } else { ?>
+                                <p>
 
-                                <h4 class="exchange-text">
+                                    <strong>Author:</strong>
 
-                                    Exchange
+                                    <?php
+                                    echo htmlspecialchars(
+                                        $book['author']
+                                    );
+                                    ?>
 
-                                </h4>
+                                </p>
 
-                            <?php } ?>
+                                <p>
 
+                                    <strong>Category:</strong>
 
-                            <div class="listing-actions">
+                                    <?php
+                                    echo htmlspecialchars(
+                                        $book['category']
+                                    );
+                                    ?>
 
+                                </p>
 
-                                <a
-                                    href="bookdetails.php?id=<?php echo (int)$book['id']; ?>"
-                                    class="view-listing-btn"
-                                >
-                                    View
-                                </a>
+                                <?php if ($book['type'] === "Sell") { ?>
 
+                                    <h4>
 
-                                <a
-                                    href="editbook.php?id=<?php echo (int)$book['id']; ?>"
-                                    class="edit-listing-btn"
-                                >
-                                    Edit
-                                </a>
+                                        Rs.
+                                        <?php
+                                        echo number_format(
+                                            (float) $book['price'],
+                                            2
+                                        );
+                                        ?>
 
+                                    </h4>
 
-                                <form
-                                    method="POST"
-                                    onsubmit="return confirm('Are you sure you want to delete this book?');"
-                                >
+                                <?php } else { ?>
 
-                                    <input
-                                        type="hidden"
-                                        name="book_id"
-                                        value="<?php echo (int)$book['id']; ?>"
-                                    >
+                                    <h4 class="exchange-text">
 
-                                    <button
-                                        type="submit"
-                                        name="delete_book"
-                                        class="delete-listing-btn"
-                                    >
-                                        Delete
-                                    </button>
+                                        Exchange
 
-                                </form>
+                                    </h4>
 
+                                <?php } ?>
+
+                                <div class="listing-actions">
+
+                                    <a href="bookdetails.php?id=<?php echo (int) $book['id']; ?>" class="view-listing-btn">
+                                        View
+                                    </a>
+
+                                    <a href="editbook.php?id=<?php echo (int) $book['id']; ?>" class="edit-listing-btn">
+                                        Edit
+                                    </a>
+
+                                    <form method="POST"
+                                        onsubmit="return confirm('Are you sure you want to delete this book?');">
+
+                                        <input type="hidden" name="book_id" value="<?php echo (int) $book['id']; ?>">
+
+                                        <button type="submit" name="delete_book" class="delete-listing-btn">
+                                            Delete
+                                        </button>
+
+                                    </form>
+
+                                </div>
 
                             </div>
 
                         </div>
 
-                    </div>
-
-                <?php
+                        <?php
 
                     }
 
                 } else {
 
-                ?>
+                    ?>
 
                     <div class="empty-listings">
 
@@ -409,16 +348,13 @@ include("header.php");
                             Sell or exchange your books with other students.
                         </p>
 
-                        <a
-                            href="addbook.php"
-                            class="btn-primary"
-                        >
+                        <a href="addbook.php" class="btn-primary">
                             List Your First Book
                         </a>
 
                     </div>
 
-                <?php
+                    <?php
 
                 }
 
@@ -431,7 +367,6 @@ include("header.php");
     </div>
 
 </section>
-
 
 <?php
 

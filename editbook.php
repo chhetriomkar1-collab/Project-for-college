@@ -3,9 +3,7 @@
 session_start();
 include("conn.php");
 
-// ==========================================
 // LOGIN CHECK
-// ==========================================
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -14,10 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-
-// ==========================================
 // CHECK BOOK ID
-// ==========================================
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: profile.php");
@@ -26,11 +21,8 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $book_id = (int) $_GET['id'];
 
-
-// ==========================================
 // FETCH BOOK
 // IMPORTANT: user_id ensures ownership
-// ==========================================
 
 $stmt = $conn->prepare("
     SELECT *
@@ -56,10 +48,7 @@ $book = $result->fetch_assoc();
 
 $stmt->close();
 
-
-// ==========================================
 // UPDATE BOOK
-// ==========================================
 
 $error = "";
 
@@ -73,7 +62,6 @@ if (isset($_POST['update_book'])) {
     $type = trim($_POST['type']);
     $price = trim($_POST['price']);
     $description = trim($_POST['description']);
-
 
     // ======================================
     // OTHER CATEGORY
@@ -91,7 +79,6 @@ if (isset($_POST['update_book'])) {
         }
     }
 
-
     // ======================================
     // BASIC VALIDATION
     // ======================================
@@ -106,9 +93,7 @@ if (isset($_POST['update_book'])) {
 
             $error = "Please fill in all required fields.";
 
-        }
-
-        elseif (
+        } elseif (
             $condition === "" ||
             !in_array(
                 $condition,
@@ -118,9 +103,7 @@ if (isset($_POST['update_book'])) {
 
             $error = "Invalid book condition.";
 
-        }
-
-        elseif (
+        } elseif (
             $type !== "Sell" &&
             $type !== "Exchange"
         ) {
@@ -146,7 +129,6 @@ if (isset($_POST['update_book'])) {
 
         }
     }
-
 
     // ======================================
     // IMAGE
@@ -182,7 +164,6 @@ if (isset($_POST['update_book'])) {
                 )
             );
 
-
             if (!in_array($extension, $allowed)) {
 
                 $error =
@@ -198,11 +179,12 @@ if (isset($_POST['update_book'])) {
                 $uploadPath =
                     "images/" . $newImage;
 
-
-                if (!move_uploaded_file(
-                    $_FILES['image']['tmp_name'],
-                    $uploadPath
-                )) {
+                if (
+                    !move_uploaded_file(
+                        $_FILES['image']['tmp_name'],
+                        $uploadPath
+                    )
+                ) {
 
                     $error =
                         "Failed to upload the new image.";
@@ -212,7 +194,6 @@ if (isset($_POST['update_book'])) {
             }
         }
     }
-
 
     // ======================================
     // UPDATE DATABASE
@@ -225,7 +206,6 @@ if (isset($_POST['update_book'])) {
 
             $price = null;
         }
-
 
         $updateStmt = $conn->prepare("
             UPDATE books
@@ -242,7 +222,6 @@ if (isset($_POST['update_book'])) {
             AND user_id = ?
         ");
 
-
         $updateStmt->bind_param(
             "ssssssssii",
             $title,
@@ -257,11 +236,9 @@ if (isset($_POST['update_book'])) {
             $user_id
         );
 
-
         if ($updateStmt->execute()) {
 
             $updateStmt->close();
-
 
             // ==================================
             // DELETE OLD IMAGE
@@ -280,7 +257,6 @@ if (isset($_POST['update_book'])) {
                     unlink($oldImagePath);
                 }
             }
-
 
             header(
                 "Location: profile.php"
@@ -308,10 +284,7 @@ if (isset($_POST['update_book'])) {
     }
 }
 
-
-// ==========================================
 // HEADER
-// ==========================================
 
 include("header.php");
 
@@ -332,7 +305,6 @@ include("header.php");
 
         </div>
 
-
         <?php if ($error !== "") { ?>
 
             <div class="edit-book-error">
@@ -343,12 +315,7 @@ include("header.php");
 
         <?php } ?>
 
-
-        <form
-            method="POST"
-            enctype="multipart/form-data"
-        >
-
+        <form method="POST" enctype="multipart/form-data">
 
             <!-- =================================
                  CURRENT IMAGE
@@ -356,14 +323,10 @@ include("header.php");
 
             <div class="current-book-image">
 
-                <img
-                    src="images/<?php echo htmlspecialchars($book['image']); ?>"
-                    alt="Current Book Cover"
-                    id="imagePreview"
-                >
+                <img src="images/<?php echo htmlspecialchars($book['image']); ?>" alt="Current Book Cover"
+                    id="imagePreview">
 
             </div>
-
 
             <!-- =================================
                  NEW IMAGE
@@ -373,17 +336,11 @@ include("header.php");
                 Book Cover
             </label>
 
-            <input
-                type="file"
-                name="image"
-                accept=".jpg,.jpeg,.png,.webp"
-                id="bookImage"
-            >
+            <input type="file" name="image" accept=".jpg,.jpeg,.png,.webp" id="bookImage">
 
             <small class="image-help">
                 Leave empty to keep the current image.
             </small>
-
 
             <!-- =================================
                  TITLE
@@ -393,13 +350,7 @@ include("header.php");
                 Book Title
             </label>
 
-            <input
-                type="text"
-                name="title"
-                value="<?php echo htmlspecialchars($book['title']); ?>"
-                required
-            >
-
+            <input type="text" name="title" value="<?php echo htmlspecialchars($book['title']); ?>" required>
 
             <!-- =================================
                  AUTHOR
@@ -409,13 +360,7 @@ include("header.php");
                 Author
             </label>
 
-            <input
-                type="text"
-                name="author"
-                value="<?php echo htmlspecialchars($book['author']); ?>"
-                required
-            >
-
+            <input type="text" name="author" value="<?php echo htmlspecialchars($book['author']); ?>" required>
 
             <!-- =================================
                  CATEGORY
@@ -445,11 +390,7 @@ include("header.php");
 
             ?>
 
-            <select
-                name="category"
-                id="category"
-                required
-            >
+            <select name="category" id="category" required>
 
                 <option value="">
                     Select Category
@@ -460,56 +401,41 @@ include("header.php");
                     as $cat
                 ) { ?>
 
-                    <option
-                        value="<?php echo htmlspecialchars($cat); ?>"
-                        <?php
-                        echo (
-                            $book['category'] === $cat
-                        )
-                            ? "selected"
-                            : "";
-                        ?>
-                    >
+                    <option value="<?php echo htmlspecialchars($cat); ?>" <?php
+                       echo (
+                           $book['category'] === $cat
+                       )
+                           ? "selected"
+                           : "";
+                       ?>>
                         <?php echo htmlspecialchars($cat); ?>
                     </option>
 
                 <?php } ?>
 
-                <option
-                    value="Other"
-                    <?php
-                    echo !$isDefaultCategory
-                        ? "selected"
-                        : "";
-                    ?>
-                >
+                <option value="Other" <?php
+                echo !$isDefaultCategory
+                    ? "selected"
+                    : "";
+                ?>>
                     Other
                 </option>
 
             </select>
 
-
             <!-- =================================
                  OTHER CATEGORY
             ================================== -->
 
-            <input
-                type="text"
-                name="other_category"
-                id="otherCategory"
-                placeholder="Enter your category"
-                value="<?php
-                    echo !$isDefaultCategory
-                        ? htmlspecialchars($book['category'])
-                        : "";
-                ?>"
-                style="<?php
-                    echo !$isDefaultCategory
-                        ? "display:block;"
-                        : "display:none;";
-                ?>"
-            >
-
+            <input type="text" name="other_category" id="otherCategory" placeholder="Enter your category" value="<?php
+            echo !$isDefaultCategory
+                ? htmlspecialchars($book['category'])
+                : "";
+            ?>" style="<?php
+            echo !$isDefaultCategory
+                ? "display:block;"
+                : "display:none;";
+            ?>">
 
             <!-- =================================
                  CONDITION
@@ -519,10 +445,7 @@ include("header.php");
                 Condition
             </label>
 
-            <select
-                name="condition"
-                required
-            >
+            <select name="condition" required>
 
                 <?php
 
@@ -536,23 +459,20 @@ include("header.php");
 
                 foreach ($conditions as $conditionOption) {
 
-                ?>
+                    ?>
 
-                    <option
-                        value="<?php
-                            echo htmlspecialchars(
-                                $conditionOption
-                            );
-                        ?>"
-                        <?php
-                        echo (
-                            $book['book_condition']
-                            === $conditionOption
-                        )
-                            ? "selected"
-                            : "";
-                        ?>
-                    >
+                    <option value="<?php
+                    echo htmlspecialchars(
+                        $conditionOption
+                    );
+                    ?>" <?php
+                    echo (
+                        $book['book_condition']
+                        === $conditionOption
+                    )
+                        ? "selected"
+                        : "";
+                    ?>>
 
                         <?php
                         echo htmlspecialchars(
@@ -566,7 +486,6 @@ include("header.php");
 
             </select>
 
-
             <!-- =================================
                  LISTING TYPE
             ================================== -->
@@ -575,40 +494,29 @@ include("header.php");
                 Listing Type
             </label>
 
-            <select
-                name="type"
-                id="listingType"
-                required
-            >
+            <select name="type" id="listingType" required>
 
-                <option
-                    value="Sell"
-                    <?php
-                    echo (
-                        $book['type'] === "Sell"
-                    )
-                        ? "selected"
-                        : "";
-                    ?>
-                >
+                <option value="Sell" <?php
+                echo (
+                    $book['type'] === "Sell"
+                )
+                    ? "selected"
+                    : "";
+                ?>>
                     Sell
                 </option>
 
-                <option
-                    value="Exchange"
-                    <?php
-                    echo (
-                        $book['type'] === "Exchange"
-                    )
-                        ? "selected"
-                        : "";
-                    ?>
-                >
+                <option value="Exchange" <?php
+                echo (
+                    $book['type'] === "Exchange"
+                )
+                    ? "selected"
+                    : "";
+                ?>>
                     Exchange
                 </option>
 
             </select>
-
 
             <!-- =================================
                  PRICE
@@ -620,21 +528,13 @@ include("header.php");
                     Price (Rs.)
                 </label>
 
-                <input
-                    type="number"
-                    name="price"
-                    id="price"
-                    min="0"
-                    step="0.01"
-                    value="<?php
-                        echo $book['price'] !== null
-                            ? htmlspecialchars($book['price'])
-                            : "";
-                    ?>"
-                >
+                <input type="number" name="price" id="price" min="0" step="0.01" value="<?php
+                echo $book['price'] !== null
+                    ? htmlspecialchars($book['price'])
+                    : "";
+                ?>">
 
             </div>
-
 
             <!-- =================================
                  DESCRIPTION
@@ -644,12 +544,8 @@ include("header.php");
                 Description
             </label>
 
-            <textarea
-                name="description"
-                rows="6"
-                placeholder="Describe the book..."
-            ><?php echo htmlspecialchars($book['description'] ?? ""); ?></textarea>
-
+            <textarea name="description" rows="6"
+                placeholder="Describe the book..."><?php echo htmlspecialchars($book['description'] ?? ""); ?></textarea>
 
             <!-- =================================
                  BUTTONS
@@ -657,18 +553,11 @@ include("header.php");
 
             <div class="edit-book-actions">
 
-                <a
-                    href="profile.php"
-                    class="cancel-edit-btn"
-                >
+                <a href="profile.php" class="cancel-edit-btn">
                     Cancel
                 </a>
 
-                <button
-                    type="submit"
-                    name="update_book"
-                    class="update-book-btn"
-                >
+                <button type="submit" name="update_book" class="update-book-btn">
                     Update Book
                 </button>
 
@@ -680,117 +569,101 @@ include("header.php");
 
 </section>
 
-
 <script>
 
-// ==========================================
-// OTHER CATEGORY
-// ==========================================
+    // OTHER CATEGORY
 
-const categorySelect =
-    document.getElementById("category");
+    const categorySelect =
+        document.getElementById("category");
 
-const otherCategory =
-    document.getElementById("otherCategory");
+    const otherCategory =
+        document.getElementById("otherCategory");
 
+    function handleCategory() {
 
-function handleCategory() {
+        if (categorySelect.value === "Other") {
 
-    if (categorySelect.value === "Other") {
+            otherCategory.style.display = "block";
 
-        otherCategory.style.display = "block";
+            otherCategory.required = true;
 
-        otherCategory.required = true;
+        } else {
 
-    } else {
+            otherCategory.style.display = "none";
 
-        otherCategory.style.display = "none";
+            otherCategory.required = false;
 
-        otherCategory.required = false;
-
-        otherCategory.value = "";
-    }
-}
-
-
-categorySelect.addEventListener(
-    "change",
-    handleCategory
-);
-
-
-// ==========================================
-// SELL / EXCHANGE PRICE
-// ==========================================
-
-const listingType =
-    document.getElementById("listingType");
-
-const priceContainer =
-    document.getElementById("priceContainer");
-
-const priceInput =
-    document.getElementById("price");
-
-
-function handleListingType() {
-
-    if (listingType.value === "Sell") {
-
-        priceContainer.style.display = "block";
-
-        priceInput.required = true;
-
-    } else {
-
-        priceContainer.style.display = "none";
-
-        priceInput.required = false;
-
-        priceInput.value = "";
-    }
-}
-
-
-listingType.addEventListener(
-    "change",
-    handleListingType
-);
-
-
-// ==========================================
-// IMAGE PREVIEW
-// ==========================================
-
-const imageInput =
-    document.getElementById("bookImage");
-
-const imagePreview =
-    document.getElementById("imagePreview");
-
-
-imageInput.addEventListener(
-    "change",
-    function () {
-
-        const file = this.files[0];
-
-        if (file) {
-
-            imagePreview.src =
-                URL.createObjectURL(file);
+            otherCategory.value = "";
         }
-
     }
-);
 
+    categorySelect.addEventListener(
+        "change",
+        handleCategory
+    );
 
-// Set initial state
-handleCategory();
-handleListingType();
+    // SELL / EXCHANGE PRICE
+
+    const listingType =
+        document.getElementById("listingType");
+
+    const priceContainer =
+        document.getElementById("priceContainer");
+
+    const priceInput =
+        document.getElementById("price");
+
+    function handleListingType() {
+
+        if (listingType.value === "Sell") {
+
+            priceContainer.style.display = "block";
+
+            priceInput.required = true;
+
+        } else {
+
+            priceContainer.style.display = "none";
+
+            priceInput.required = false;
+
+            priceInput.value = "";
+        }
+    }
+
+    listingType.addEventListener(
+        "change",
+        handleListingType
+    );
+
+    // IMAGE PREVIEW
+
+    const imageInput =
+        document.getElementById("bookImage");
+
+    const imagePreview =
+        document.getElementById("imagePreview");
+
+    imageInput.addEventListener(
+        "change",
+        function () {
+
+            const file = this.files[0];
+
+            if (file) {
+
+                imagePreview.src =
+                    URL.createObjectURL(file);
+            }
+
+        }
+    );
+
+    // Set initial state
+    handleCategory();
+    handleListingType();
 
 </script>
-
 
 <?php
 

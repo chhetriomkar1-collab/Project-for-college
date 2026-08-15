@@ -3,9 +3,7 @@
 session_start();
 include("conn.php");
 
-// ==========================================
 // LOGIN CHECK
-// ==========================================
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -17,10 +15,7 @@ $user_id = $_SESSION['user_id'];
 $error = "";
 $success = "";
 
-
-// ==========================================
 // FETCH CURRENT USER
-// ==========================================
 
 $stmt = $conn->prepare("
     SELECT
@@ -51,16 +46,12 @@ $user = $result->fetch_assoc();
 
 $stmt->close();
 
-
-// ==========================================
 // UPDATE PROFILE
-// ==========================================
 
 if (isset($_POST['update_profile'])) {
 
     $fullname = trim($_POST['fullname']);
     $email = trim($_POST['email']);
-
 
     // ======================================
     // VALIDATION
@@ -74,7 +65,6 @@ if (isset($_POST['update_profile'])) {
 
         $error = "Please enter a valid email address.";
     }
-
 
     // ======================================
     // CHECK EMAIL
@@ -107,7 +97,6 @@ if (isset($_POST['update_profile'])) {
 
         $checkStmt->close();
     }
-
 
     // ======================================
     // PROFILE IMAGE
@@ -144,7 +133,6 @@ if (isset($_POST['update_profile'])) {
                 )
             );
 
-
             if (!in_array($extension, $allowed)) {
 
                 $error =
@@ -157,7 +145,6 @@ if (isset($_POST['update_profile'])) {
                     mkdir("uploads", 0755, true);
                 }
 
-
                 $newProfileImage =
                     uniqid("profile_", true) .
                     "." .
@@ -166,11 +153,12 @@ if (isset($_POST['update_profile'])) {
                 $uploadPath =
                     "uploads/" . $newProfileImage;
 
-
-                if (!move_uploaded_file(
-                    $_FILES['profile_image']['tmp_name'],
-                    $uploadPath
-                )) {
+                if (
+                    !move_uploaded_file(
+                        $_FILES['profile_image']['tmp_name'],
+                        $uploadPath
+                    )
+                ) {
 
                     $error =
                         "Failed to upload the profile image.";
@@ -181,7 +169,6 @@ if (isset($_POST['update_profile'])) {
             }
         }
     }
-
 
     // ======================================
     // UPDATE DATABASE
@@ -206,11 +193,9 @@ if (isset($_POST['update_profile'])) {
             $user_id
         );
 
-
         if ($updateStmt->execute()) {
 
             $updateStmt->close();
-
 
             // ==================================
             // DELETE OLD PROFILE IMAGE
@@ -231,10 +216,8 @@ if (isset($_POST['update_profile'])) {
                 }
             }
 
-
             // Update session information
             $_SESSION['fullname'] = $fullname;
-
 
             header("Location: profile.php");
             exit();
@@ -245,7 +228,6 @@ if (isset($_POST['update_profile'])) {
                 "Failed to update your profile.";
 
             $updateStmt->close();
-
 
             // Delete newly uploaded image
             // if database update failed
@@ -265,16 +247,12 @@ if (isset($_POST['update_profile'])) {
     }
 }
 
-
-// ==========================================
 // HEADER
-// ==========================================
 
 include("header.php");
 
 ?>
 <link rel="stylesheet" href="css/edit-profile.css">
-
 
 <section class="edit-profile-section">
 
@@ -289,7 +267,6 @@ include("header.php");
             </p>
 
         </div>
-
 
         <!-- =================================
              ERROR
@@ -307,16 +284,11 @@ include("header.php");
 
         <?php } ?>
 
-
         <!-- =================================
              FORM
         ================================== -->
 
-        <form
-            method="POST"
-            enctype="multipart/form-data"
-        >
-
+        <form method="POST" enctype="multipart/form-data">
 
             <!-- PROFILE IMAGE -->
 
@@ -324,50 +296,32 @@ include("header.php");
 
                 <?php if (!empty($user['profile_image'])) { ?>
 
-                    <img
-                        src="uploads/<?php echo htmlspecialchars($user['profile_image']); ?>"
-                        id="profilePreview"
-                        alt="Profile Image"
-                    >
+                    <img src="uploads/<?php echo htmlspecialchars($user['profile_image']); ?>" id="profilePreview"
+                        alt="Profile Image">
 
                 <?php } else { ?>
 
-                    <div
-                        class="profile-default-preview"
-                        id="defaultPreview"
-                    >
+                    <div class="profile-default-preview" id="defaultPreview">
 
                         <i class="fa-solid fa-user"></i>
 
                     </div>
 
-                    <img
-                        src=""
-                        id="profilePreview"
-                        alt="Profile Image"
-                        style="display:none;"
-                    >
+                    <img src="" id="profilePreview" alt="Profile Image" style="display:none;">
 
                 <?php } ?>
 
             </div>
 
-
             <label>
                 Profile Picture
             </label>
 
-            <input
-                type="file"
-                name="profile_image"
-                id="profileImage"
-                accept=".jpg,.jpeg,.png,.webp"
-            >
+            <input type="file" name="profile_image" id="profileImage" accept=".jpg,.jpeg,.png,.webp">
 
             <small class="profile-image-help">
                 JPG, JPEG, PNG or WEBP
             </small>
-
 
             <!-- FULL NAME -->
 
@@ -375,13 +329,7 @@ include("header.php");
                 Full Name
             </label>
 
-            <input
-                type="text"
-                name="fullname"
-                value="<?php echo htmlspecialchars($user['fullname']); ?>"
-                required
-            >
-
+            <input type="text" name="fullname" value="<?php echo htmlspecialchars($user['fullname']); ?>" required>
 
             <!-- USERNAME -->
 
@@ -389,16 +337,11 @@ include("header.php");
                 Username
             </label>
 
-            <input
-                type="text"
-                value="<?php echo htmlspecialchars($user['username']); ?>"
-                disabled
-            >
+            <input type="text" value="<?php echo htmlspecialchars($user['username']); ?>" disabled>
 
             <small class="username-help">
                 Username cannot be changed.
             </small>
-
 
             <!-- EMAIL -->
 
@@ -406,30 +349,17 @@ include("header.php");
                 Email
             </label>
 
-            <input
-                type="email"
-                name="email"
-                value="<?php echo htmlspecialchars($user['email']); ?>"
-                required
-            >
-
+            <input type="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
 
             <!-- BUTTONS -->
 
             <div class="edit-profile-actions">
 
-                <a
-                    href="profile.php"
-                    class="cancel-profile-btn"
-                >
+                <a href="profile.php" class="cancel-profile-btn">
                     Cancel
                 </a>
 
-                <button
-                    type="submit"
-                    name="update_profile"
-                    class="save-profile-btn"
-                >
+                <button type="submit" name="update_profile" class="save-profile-btn">
                     Save Changes
                 </button>
 
@@ -441,49 +371,44 @@ include("header.php");
 
 </section>
 
-
 <script>
 
-// ==========================================
-// PROFILE IMAGE PREVIEW
-// ==========================================
+    // PROFILE IMAGE PREVIEW
 
-const profileImage =
-    document.getElementById("profileImage");
+    const profileImage =
+        document.getElementById("profileImage");
 
-const profilePreview =
-    document.getElementById("profilePreview");
+    const profilePreview =
+        document.getElementById("profilePreview");
 
-const defaultPreview =
-    document.getElementById("defaultPreview");
+    const defaultPreview =
+        document.getElementById("defaultPreview");
 
+    profileImage.addEventListener(
+        "change",
+        function () {
 
-profileImage.addEventListener(
-    "change",
-    function () {
+            const file = this.files[0];
 
-        const file = this.files[0];
+            if (!file) {
+                return;
+            }
 
-        if (!file) {
-            return;
+            profilePreview.src =
+                URL.createObjectURL(file);
+
+            profilePreview.style.display =
+                "block";
+
+            if (defaultPreview) {
+                defaultPreview.style.display =
+                    "none";
+            }
+
         }
-
-        profilePreview.src =
-            URL.createObjectURL(file);
-
-        profilePreview.style.display =
-            "block";
-
-        if (defaultPreview) {
-            defaultPreview.style.display =
-                "none";
-        }
-
-    }
-);
+    );
 
 </script>
-
 
 <?php
 
