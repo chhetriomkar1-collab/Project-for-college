@@ -1,0 +1,121 @@
+/* Add Book Page */
+
+.add-book-container{
+
+    display:flex;
+
+    justify-content:center;
+
+    padding:60px 20px;
+
+    background:#f5f7fa;
+
+}
+
+.add-book-card{
+
+    width:100%;
+
+    max-width:700px;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:15px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.add-book-card h1{
+
+    color:#2563EB;
+
+    margin-bottom:10px;
+
+}
+
+.add-book-card p{
+
+    color:#777;
+
+    margin-bottom:30px;
+
+}
+
+.add-book-card label{
+
+    display:block;
+
+    margin-top:20px;
+
+    margin-bottom:8px;
+
+    font-weight:500;
+
+}
+
+.add-book-card input,
+.add-book-card select,
+.add-book-card textarea{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:15px;
+
+}
+
+.add-book-card textarea{
+
+    resize:vertical;
+
+}
+
+.add-book-card input:focus,
+.add-book-card select:focus,
+.add-book-card textarea:focus{
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 8px rgba(37,99,235,.2);
+
+}
+
+.add-book-card button{
+
+    width:100%;
+
+    margin-top:30px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563EB;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.add-book-card button:hover{
+
+    background:#1D4ED8;
+
+}

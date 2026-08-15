@@ -1,0 +1,198 @@
+/* =========================================
+   EDIT BOOK PAGE
+========================================= */
+
+.edit-book-section {
+    min-height: 80vh;
+    padding: 60px 20px;
+    background: #f8fafc;
+}
+
+.edit-book-card {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.edit-book-header {
+    margin-bottom: 25px;
+}
+
+.edit-book-header h1 {
+    color: #2563eb;
+    margin-bottom: 5px;
+}
+
+.edit-book-header p {
+    color: #6b7280;
+}
+
+.edit-book-error {
+    padding: 12px 15px;
+
+    margin-bottom: 20px;
+
+    background: #fee2e2;
+    color: #dc2626;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+}
+
+.edit-book-card label {
+    display: block;
+
+    margin-top: 20px;
+    margin-bottom: 8px;
+
+    color: #374151;
+
+    font-weight: 500;
+}
+
+.edit-book-card input,
+.edit-book-card select,
+.edit-book-card textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 15px;
+
+    background: white;
+}
+
+.edit-book-card input:focus,
+.edit-book-card select:focus,
+.edit-book-card textarea:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 8px rgba(37,99,235,.15);
+}
+
+.edit-book-card textarea {
+    resize: vertical;
+}
+
+.current-book-image {
+    text-align: center;
+
+    margin-bottom: 20px;
+}
+
+.current-book-image img {
+    width: 200px;
+    height: 270px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.12);
+}
+
+.image-help {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #9ca3af;
+
+    font-size: 12px;
+}
+
+#otherCategory {
+    margin-top: 10px;
+}
+
+.edit-book-actions {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.cancel-edit-btn,
+.update-book-btn {
+    flex: 1;
+
+    padding: 14px;
+
+    border-radius: 9px;
+
+    text-align: center;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    text-decoration: none;
+}
+
+.cancel-edit-btn {
+    background: #f3f4f6;
+
+    color: #374151;
+}
+
+.cancel-edit-btn:hover {
+    background: #e5e7eb;
+}
+
+.update-book-btn {
+    border: none;
+
+    background: #2563eb;
+
+    color: white;
+}
+
+.update-book-btn:hover {
+    background: #1d4ed8;
+}
+
+
+@media(max-width: 600px) {
+
+    .edit-book-section {
+        padding: 30px 15px;
+    }
+
+    .edit-book-card {
+        padding: 25px 20px;
+    }
+
+    .edit-book-actions {
+        flex-direction: column;
+    }
+
+    .current-book-image img {
+        width: 160px;
+        height: 220px;
+    }
+
+}

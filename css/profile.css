@@ -1,0 +1,322 @@
+/* =========================================
+   PROFILE PAGE
+========================================= */
+
+.profile-section {
+    padding: 60px 8%;
+    background: #f8fafc;
+    min-height: 80vh;
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* =========================================
+   PROFILE CARD
+========================================= */
+
+.profile-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,.07);
+    margin-bottom: 40px;
+}
+
+.profile-avatar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profile-avatar img,
+.default-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+}
+
+.profile-avatar img {
+    object-fit: cover;
+}
+
+.default-avatar {
+    background: #dbeafe;
+    color: #2563eb;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 40px;
+}
+
+.profile-card h1 {
+    color: #1f2937;
+    margin-bottom: 5px;
+}
+
+.profile-username {
+    color: #2563eb;
+    font-weight: 500;
+}
+
+.profile-email {
+    color: #6b7280;
+    margin-top: 8px;
+}
+
+.profile-role {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 6px 14px;
+
+    background: #dbeafe;
+    color: #2563eb;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.member-since {
+    margin-top: 15px;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.edit-profile-btn {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 10px 20px;
+
+    border: 1px solid #2563eb;
+    border-radius: 8px;
+
+    color: #2563eb;
+    text-decoration: none;
+
+    font-weight: 500;
+}
+
+.edit-profile-btn:hover {
+    background: #2563eb;
+    color: white;
+}
+
+
+/* =========================================
+   LISTINGS HEADER
+========================================= */
+
+.profile-section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.profile-section-title h2 {
+    color: #1f2937;
+    font-size: 30px;
+}
+
+.profile-section-title p {
+    color: #6b7280;
+    margin-top: 5px;
+}
+
+.add-listing-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    background: #2563eb;
+    color: white;
+
+    padding: 12px 18px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.add-listing-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================================
+   MY BOOKS GRID
+========================================= */
+
+.my-books-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 25px;
+}
+
+.my-book-card {
+    background: white;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    box-shadow: 0 6px 20px rgba(0,0,0,.07);
+
+    transition: .3s;
+}
+
+.my-book-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 15px 30px rgba(0,0,0,.1);
+}
+
+.my-book-card > img {
+    width: 100%;
+    height: 280px;
+
+    object-fit: cover;
+}
+
+.my-book-info {
+    padding: 20px;
+}
+
+.my-book-info h3 {
+    color: #1f2937;
+    margin-bottom: 12px;
+}
+
+.my-book-info p {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+.my-book-info h4 {
+    color: #2563eb;
+    margin-top: 15px;
+}
+
+.exchange-text {
+    color: #15803d !important;
+}
+
+
+/* =========================================
+   LISTING ACTIONS
+========================================= */
+
+.listing-actions {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr 1fr;
+
+    gap: 8px;
+
+    margin-top: 20px;
+}
+
+.listing-actions a,
+.listing-actions button {
+    width: 100%;
+
+    padding: 9px 5px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    font-family: 'Poppins', sans-serif;
+}
+
+.view-listing-btn {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.edit-listing-btn {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.delete-listing-btn {
+    background: #fee2e2;
+    color: #dc2626;
+
+    border: none;
+}
+
+.view-listing-btn:hover {
+    background: #dbeafe;
+}
+
+.edit-listing-btn:hover {
+    background: #e5e7eb;
+}
+
+.delete-listing-btn:hover {
+    background: #fecaca;
+}
+
+
+/* =========================================
+   EMPTY LISTINGS
+========================================= */
+
+.empty-listings {
+    grid-column: 1 / -1;
+
+    background: white;
+
+    border-radius: 15px;
+
+    padding: 70px 20px;
+
+    text-align: center;
+
+    box-shadow: 0 6px 20px rgba(0,0,0,.05);
+}
+
+.empty-listings i {
+    font-size: 50px;
+    color: #93c5fd;
+
+    margin-bottom: 20px;
+}
+
+.empty-listings h3 {
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.empty-listings p {
+    color: #6b7280;
+    margin-bottom: 25px;
+}
+
+
+/* =========================================
