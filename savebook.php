@@ -13,10 +13,37 @@ if (isset($_POST['submit'])) {
 
     $title = trim($_POST['title']);
     $author = trim($_POST['author']);
-    $category = trim($_POST['category']);
+$category = trim($_POST['category']);
+
+if ($category === "Other") {
+
+    $other_category =
+        trim($_POST['other_category'] ?? "");
+
+    if ($other_category === "") {
+
+        die("Please enter your category.");
+
+    }
+
+    $category = $other_category;
+}
     $condition = trim($_POST['condition']);
     $type = trim($_POST['type']);
     $price = trim($_POST['price']);
+    if ($type === "Exchange") {
+
+    $price = "";
+
+} elseif ($type === "Sell") {
+
+    if ($price === "") {
+
+        die("Please enter a price for a sale listing.");
+
+    }
+
+}
     $description = trim($_POST['description']);
 
  $imageName = "";
