@@ -1,0 +1,135 @@
+.contact-section {
+    min-height: calc(100vh - 100px);
+    padding: 70px 20px;
+    background: #f5f7fa;
+}
+
+.contact-container {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.contact-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: #e8f0ff;
+    color: #2563eb;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.contact-header h1 {
+    margin-top: 18px;
+    margin-bottom: 10px;
+    color: #1f2937;
+    font-size: 36px;
+}
+
+.contact-header p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+.contact-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #374151;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.contact-submit {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.contact-submit:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.error,
+.success {
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.error {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.success {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+@media (max-width: 600px) {
+
+    .contact-section {
+        padding: 40px 15px;
+    }
+
+    .contact-header h1 {
+        font-size: 28px;
+    }
+
+    .contact-card {
+        padding: 25px 20px;
+    }
+}
