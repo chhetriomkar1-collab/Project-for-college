@@ -2,9 +2,6 @@
 
 session_start();
 include("conn.php");
-
-// GET LOGGED-IN USER
-
 $user_id = $_SESSION['user_id']
     ?? $_SESSION['id']
     ?? null;
@@ -13,8 +10,6 @@ if (!$user_id) {
     header("Location: login.php");
     exit();
 }
-
-// ADMIN CHECK
 
 $adminStmt = $conn->prepare("
     SELECT role
